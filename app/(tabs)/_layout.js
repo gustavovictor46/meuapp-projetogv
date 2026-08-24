@@ -20,7 +20,7 @@ export default function TabsLayout() {
                     backgroundColor: '#090922',
                     borderTopWidth: 1,
                     borderTopColor: '#ff007f',
-                    height: 90,
+                    height: 60,
                     paddingBottom: 8,
                 },
                 tabBarActiveTintColor: '#ff007f',
@@ -65,6 +65,16 @@ export default function TabsLayout() {
                 options={{
                     title: 'Sobre',
                     headerTitle: 'Sobre',
+                    tabBarIcon: ({ color, size }) => (
+                        <Ionicons name="information-circle-outline" size={size} color={color} />
+                    ),
+                }}
+            />
+            <Tabs.Screen
+                name="api"
+                options={{
+                    title: 'API',
+                    headerTitle: 'Conteúdo API',
                     tabBarIcon: ({ color, size }) => (
                         <Ionicons name="information-circle-outline" size={size} color={color} />
                     ),

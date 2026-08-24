@@ -14,8 +14,8 @@ export default function HomeScreen() {
             style={styles.logo}
             resizeMode="contain"
           />
-          <Text style={styles.eyebrow}>React Native + Expo Router</Text>
-          <Text style={styles.title}>Seu app já nasce organizado</Text>
+          <Text style={styles.eyebrow}>Meu projeto - 2TDS1</Text>
+          <Text style={styles.title}>Gustavo Victor Ferreira</Text>
           <Text style={styles.description}>
             Estrutura pronta para o aluno focar em componentes, navegação e
             lógica de negócio desde a primeira aula.
@@ -84,7 +84,7 @@ const styles = StyleSheet.create({
     },
     card: {
         gap: 8,
-        padding: 20,
+        padding: 16,
         borderRadius: 20,
         backgroundColor: '#2b003b',
     },
