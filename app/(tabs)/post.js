@@ -13,6 +13,7 @@ import axios from "axios";
 
 const API_KEY = "cv_hkgBhiqEDlnYiHfDOof78_Fq9qh0e2RpOj_kJ0NTOz8tyfGs4TJ_ByKGF6FovudW";
 
+const api = axios.create({
   baseURL: "https://api-ds.codeverse.dev.br",
   headers: {
     "x-api-key": API_KEY,
