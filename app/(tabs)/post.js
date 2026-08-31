@@ -11,14 +11,8 @@ import {
 import { SafeAreaView } from "react-native-safe-area-context";
 import axios from "axios";
 
-// Em produção, uma chave de API não deveria morar direto no código do
-// app (dá pra extrair de qualquer APK/IPA instalado). Aqui, como é uma
-// API pública de estudo, deixamos direto no código pra simplificar.
 const API_KEY = "cv_hkgBhiqEDlnYiHfDOof78_Fq9qh0e2RpOj_kJ0NTOz8tyfGs4TJ_ByKGF6FovudW";
 
-// Mesma instância do axios usada na tela de listagem, com o header já
-// configurado — toda chamada feita com "api" já sai autenticada.
-const api = axios.create({
   baseURL: "https://api-ds.codeverse.dev.br",
   headers: {
     "x-api-key": API_KEY,
@@ -28,47 +22,44 @@ const api = axios.create({
 
 export default function FilmesCriarScreen() {
   const [titulo, setTitulo] = useState("");
-  const [descricao, setDescricao] = useState("");
   const [imagemUrl, setImagemUrl] = useState("");
   const [diretor, setDiretor] = useState("");
-  const [duracao, setDuracao] = useState("");
+  const [ano, setAno] = useState("");
   const [genero, setGenero] = useState("");
+  const [nota, setNota] = useState("");
 
   const [enviando, setEnviando] = useState(false);
 
   async function criarFilme() {
-    if (!titulo) {
-      Alert.alert("Preencha pelo menos o título.");
+    if (!titulo || !imagemUrl || !diretor || !ano || !genero || !nota) {
+      Alert.alert("Preencha todos os campos obrigatórios.");
       return;
     }
 
     setEnviando(true);
     try {
-
-      const resposta = await api.post("/api/filmes", {
+      const payload = {
         title: titulo,
-        description: descricao,
-        status: "lançado",
         imageUrl: imagemUrl,
         diretor: diretor,
-        duracao: Number(duracao),
+        ano: Number(ano),
         genero: genero,
-      });
+        nota: Number(nota),
+      };
+
+      const resposta = await api.post("/api/filmes", payload);
 
       Alert.alert("Filme criado!", resposta.data.title);
       setTitulo("");
-      setDescricao("");
       setImagemUrl("");
       setDiretor("");
-      setDuracao("");
+      setAno("");
       setGenero("");
-    }catch (e) {
-            console.log("Erro da API:", e.response?.data || e.message);
-
-            const mensagemErro = e.response?.data?.message || e.response?.data?.error || "Verifique os dados enviados.";
-
-            Alert.alert("Erro da API", JSON.stringify(e.response?.data));
-        } finally {
+      setNota("");
+    } catch (e) {
+      console.log("Erro da API:", e.response?.data || e.message);
+      Alert.alert("Erro da API", JSON.stringify(e.response?.data || { message: e.message }));
+    } finally {
       setEnviando(false);
     }
   }
@@ -89,14 +80,6 @@ export default function FilmesCriarScreen() {
           placeholder="Ex: The Batman"
         />
 
-        <Text style={styles.rotulo}>Descrição</Text>
-        <TextInput
-          style={styles.campo}
-          value={descricao}
-          onChangeText={setDescricao}
-          placeholder="Ex: Herói vigilante de Gotham City."
-        />
-
         <Text style={styles.rotulo}>URL da imagem</Text>
         <TextInput
           style={styles.campo}
@@ -104,7 +87,6 @@ export default function FilmesCriarScreen() {
           onChangeText={setImagemUrl}
           placeholder="Ex: https://exemplo.com/thebatman.jpg"
         />
-
 
         <Text style={styles.rotulo}>Diretor</Text>
         <TextInput
@@ -114,12 +96,13 @@ export default function FilmesCriarScreen() {
           placeholder="Ex: Matt Reeves"
         />
 
-        <Text style={styles.rotulo}>Duração</Text>
+        <Text style={styles.rotulo}>Ano</Text>
         <TextInput
           style={styles.campo}
-          value={duracao}
-          onChangeText={setDuracao}
-          placeholder="Ex: 176 minutos"
+          value={ano}
+          onChangeText={setAno}
+          keyboardType="numeric"
+          placeholder="Ex: 2022"
         />
 
         <Text style={styles.rotulo}>Gênero</Text>
@@ -128,6 +111,15 @@ export default function FilmesCriarScreen() {
           value={genero}
           onChangeText={setGenero}
           placeholder="Ex: Thriller"
+        />
+
+        <Text style={styles.rotulo}>Nota</Text>
+        <TextInput
+          style={styles.campo}
+          value={nota}
+          onChangeText={setNota}
+          keyboardType="decimal-pad"
+          placeholder="Ex: 8.7"
         />
 
         <Pressable style={styles.botao} onPress={criarFilme} disabled={enviando}>
