@@ -61,7 +61,7 @@ export default function FilmesExcluirScreen() {
     }
 
     function confirmarExclusao(filme) {
-        Alert.alert("Excluir filme", Tem certeza que quer excluir "${filme.title}"? Essa ação não pode ser desfeita., [{ text: "Cancelar", style: "cancel" }, { text: "Excluir", style: "destructive", onPress: () => excluirFilme(filme.id) }]);
+        Alert.alert("Excluir filme", `Tem certeza que quer excluir ${filme.title}?`, "Essa ação não pode ser desfeita.", [{ text: "Cancelar", style: "cancel" }, { text: "Excluir", style: "destructive", onPress: () => excluirFilme(filme.id) }]);
     }
 
     return (
@@ -100,7 +100,7 @@ export default function FilmesExcluirScreen() {
 const styles = StyleSheet.create({
   safeArea: {
     flex: 1,
-    backgroundColor: '#2b003b', 
+    backgroundColor: '#2b003b',
   },
   conteudo: {
     padding: 24,
@@ -144,7 +144,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#2b003b',
     borderRadius: 16,
     borderWidth: 1,
-    borderColor: 'rgba(255, 0, 127, 0.2)', 
+    borderColor: 'rgba(255, 0, 127, 0.2)',
     overflow: 'hidden',
     paddingRight: 12,
   },
@@ -163,7 +163,7 @@ const styles = StyleSheet.create({
     color: '#ff007f',
   },
   botaoExcluir: {
-    backgroundColor: '#ff007f', 
+    backgroundColor: '#ff007f',
     paddingHorizontal: 16,
     paddingVertical: 10,
     borderRadius: 12,
